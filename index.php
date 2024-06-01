@@ -1,13 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
-</head>
-<body>
+<?php
 
-	<h1>En construcción</h1>
-	
-</body>
-</html>
+	// incluimos el motor de plantillas
+	include_once 'lib/motorMaster/MotorMaster.php';
+
+	// Router con auto carga de controladores 
+
+	// por defecto seccion es landing
+	$seccion = "landing";
+
+	// si existe slug por GET
+	if(isset($_GET['slug'])){
+		// se reemplaza seccion por el valor de slug	
+		$seccion = $_GET['slug'];
+	}
+
+	// si no existe el archivo del controlador
+	if(!file_exists('controllers/'.$seccion.'Controller.php')){
+		// seccion se carga con el controlador de error 404
+		$seccion = "error404";
+	}
+
+	// carga del controlador
+	include 'controllers/'.$seccion.'Controller.php';
+
+ ?>
