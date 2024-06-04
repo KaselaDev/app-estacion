@@ -1,42 +1,75 @@
-<?php 
+<?php
+
 
 	/**
 	 * 
-	 * Retorna la vista en formato de string
-	 * @param string $view nombre de la vista
-	 * @return string vista para ser modificada o impresa
+	 * Motor de plantillas para php
 	 * 
 	 * */
-	function loadTPL($view){
+	class MotorMaster{
 
-		return file_get_contents("views/".$view."View.html");
-	}
+		private $buffer; // contenido de la vista
+		public $vista; // nombre de la vista
 
-	/**
-	 * 
-	 * reemplaza las variables de la vista
-	 * @param array $vars es un vector asociativo con las variables y su contenido
-	 * @param string $tpl es la vista
-	 * @return string la vista con las variables reemplazadas
-	 * 
-	 * */
-	function setVarsTPL($vars, $tpl){
+		/**
+		 * 
+		 * Se ejecuta al instanciar la clase
+		 * @param string $vista nombre de la vista
+		 * 
+		 * */
+		function __construct($vista){
+			$this->vista = $vista;
 
-		foreach ($vars as $needle => $content) {
-			$tpl =str_replace("{{".$needle."}}", $content, $tpl); 
+			if(!file_exists("views/".$vista."View.html")){
+
+				echo "No se encontro la vista <b>$vista</b>";
+				exit();
+			}
+
+			$this->buffer = file_get_contents("views/".$vista."View.html");
 		}
 
-		return $tpl;
-	}
+		/**
+		 * 
+		 * Reemplaza las variables del buffer
+		 * @param array $vars Es un arreglo asociativo la llave es el nombre de la variable
+		 * 
+		 * */
 
-	/**
-	 * 
-	 * Imprime la vista en pantalla
-	 * @param string $tpl la vista a ser impresa en pantalla
-	 * 
-	 * */
-	function printTPL($tpl){
-		echo $tpl;
+		function setVars($vars){
+
+			foreach ($vars as $needle => $content) {
+
+				if($this->testVar($needle)){
+					$this->buffer =str_replace("{{".$needle."}}", $content, $this->buffer); 
+				}else{
+
+					echo "No existe en la vista la variable <b>$needle</b>";
+					exit();
+				}
+			}
+		}
+
+		/**
+		 * 
+		 * Verifica si existe la variable dentro del buffer
+		 * @param string $name nombre de la variable
+		 * @return bool variable existe | no existe
+		 * 
+		 * */
+		function testVar($name){
+			return strpos($this->buffer, $name);
+		}
+
+		/**
+		 * 
+		 * Imprime en la pagina el contenido de buffer
+		 * 
+		 * */
+		function print(){
+			echo $this->buffer;
+		}
+		
 	}
 
 
