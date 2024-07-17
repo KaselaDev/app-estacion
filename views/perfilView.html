@@ -23,7 +23,7 @@
 
 			<div id="control">
 				
-				<a href="?slug=register" class="btn__register">Registrame</a>
+				<a href="?slug=panel" class="btn__login">Inicio</a>
 			</div>
 		</header>
 
@@ -40,15 +40,20 @@
 
 					<div id="window__description">
 
-							<h1>Iniciar Sesion</h1>
+							<h1>Perfil</h1>
 
 							<form action="" method="POST">
 								
 								<div id="error_msg">{{MSG_ERROR}}</div>
 
-								<input type="text" name="txt_email">
-								<input type="text" name="txt_password">
-								<input type="submit" name="btn_login">
+								<input type="text" name="first_name" value="{{NAME_USER}}" required>
+
+								<input type="text" name="last_name" value="{{LAST_NAME}}" required>
+								
+
+
+								<!-- <input type="password" name="txt_password" placeholder="Clave" required> -->
+								<input type="submit" name="btn_guardar" value="Guardar">
 
 
 							</form>

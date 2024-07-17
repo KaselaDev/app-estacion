@@ -35,7 +35,6 @@
 		 * @param array $vars Es un arreglo asociativo la llave es el nombre de la variable
 		 * 
 		 * */
-
 		function setVars($vars){
 
 			foreach ($vars as $needle => $content) {
