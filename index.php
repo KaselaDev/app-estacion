@@ -1,6 +1,5 @@
 <?php
 
-
 	// carga el modelos
 	include_once 'models/Users.php';
 
@@ -20,6 +19,8 @@
 		$seccion = $_GET['slug'];
 	}
 
+
+
 	// si no existe el archivo del controlador
 	if(!file_exists('controllers/'.$seccion.'Controller.php')){
 		// seccion se carga con el controlador de error 404
@@ -28,6 +29,8 @@
 
 	$seccion_login = ["panel", "logout", "perfil"];
 	$seccion_anonima = ["landing", "login", "register"];
+
+
 
 	// existe una sesion
 	if(isset($_SESSION['mbcorp'])){

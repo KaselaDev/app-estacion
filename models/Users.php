@@ -1,4 +1,12 @@
-<?php 
+<?php
+
+	/**
+	* @file Users.php
+	* @brief Implementación de las funciones para el manejo la tabla Users.
+	* @author Matias Leonardo Baez
+	* @date 2024
+	* @contact elmattprofe@gmail.com
+	*/
 
 	include_once 'DBAbstract.php';
 
@@ -24,8 +32,13 @@
 
 			foreach ($result as $key => $value) {
 
+				/**< Pasa el nombre del campo a una variable */
 				$variable = $value["Field"];
+				
+				/**< Pasa los nombres de los campos a un vector*/
+				$this->attributes[] = $variable;
 
+				/**< pasa como un nuevo atributo el nombre de un campo */
 				$this->$variable="";
 			}
 
@@ -53,6 +66,28 @@
 
 		/**
 		 * 
+		 * @brief Realiza soft delete
+		 * 
+		 * El usuario abandona o suspende su cuenta
+		 * 
+		 * @return bool nada
+		 * 
+		 * */
+		function leaveOut(){
+			// todas las tablas siempre id, create_at, update_at, delete_at
+
+			$date_soft_delete = date("Y-m-d H:i:s");
+			$id = $this->id;
+
+			$ssql = "UPDATE users SET delete_at = '$date_soft_delete' WHERE id='$id'";
+
+	
+			$this->query($ssql);
+
+		}
+
+		/**
+		 * 
 		 * Agrega el usuario
 		 * @return array arreglo de errores
 		 * 
@@ -61,8 +96,9 @@
 			
 			$vector_error = ["error" => "", "errno" => 0];
 
+			$result = $this->getByEmail();
 			// email no repetido msg guarda
-			if($this->getByEmail()=== false){
+			if($result === false){
 
 				// guardo el usuario en la tabla
 				$email = $this->email;
@@ -72,6 +108,22 @@
 
 				$vector_error["error"] = "Guardo el usuario correctamente";
 				$vector_error["errno"] = 200;
+
+				return $vector_error;
+			}
+
+			// Existe porque sufrio soft delete y volvio
+			// arrastrandose
+			if($result[0]['delete_at']!='0000-00-00 00:00:00'){
+				
+				$id = $result[0]["id"];
+				$password = md5($this->password);
+
+				$ssql = "UPDATE users SET first_name='', last_name='', password='$password',  delete_at = '0000-00-00 00:00:00' WHERE id='$id'";
+				$this->query($ssql);
+
+				$vector_error["error"] = "Usuario que vuelve arrastrandose";
+				$vector_error["errno"] = 201;
 
 				return $vector_error;
 			}
@@ -142,8 +194,10 @@
 				return $vector_error;
 			}
 
+			$result = $result[0];
+
 			// la contraseña no es correcta
-			if($result[0]["password"]!=md5($this->password)){
+			if($result["password"]!=md5($this->password)){
 				$vector_error["error"] = "La contraseña no es valida";
 				$vector_error["errno"] = 405;
 
@@ -156,8 +210,10 @@
 			// aqui deberiamos colocar la autocarga de los atributos de ese usuarios
 			//===================
 
-			$this->first_name = $result[0]["first_name"];
-			$this->last_name = $result[0]["last_name"];
+			foreach ($this->attributes as $key => $attribute) {
+				$this->$attribute = $result[$attribute];
+			}
+
 
 			return $result;
 			

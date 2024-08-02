@@ -11,6 +11,30 @@
 
 
 	<div id="wrapper">
+
+		<div id="fog">
+			
+			<div id="popup">
+				
+				<div id="popup__title">
+					<div id="popup__close">
+						X
+					</div>
+				</div>
+
+				<div id="popup__container">
+					Realmente deseas abandonar la app?
+				</div>
+
+				<div id="popup__control">
+					<a href="?slug=leaveout">
+						<div id="popup__accept">Aceptar</div>
+					</a>
+					<div id="popup__cancel">Cancelar</div>
+				</div>
+
+			</div>
+		</div>
 		
 		<header>
 
@@ -56,7 +80,11 @@
 								<input type="submit" name="btn_guardar" value="Guardar">
 
 
+
+
 							</form>
+
+							<button id="btn_leave">Abandonar</button>
 					</div>
 
 				</div>
@@ -85,7 +113,25 @@
 
 	</div>
 
-	
+	<script type="text/javascript">
+
+		function popupClose(){
+			fog.style.display = "none";
+		}
+		
+		btn_leave.addEventListener("click", e => {
+			fog.style.display = "flex";
+		})
+
+		popup__close.addEventListener("click", e => {
+			popupClose();
+		})
+
+		popup__cancel.addEventListener("click", e => {
+			popupClose();
+		})
+
+	</script>
 	
 </body>
 </html>

@@ -16,7 +16,7 @@
 		$vars["MSG_ERROR"] = $result["error"];
 
 		// si el registro fue valido
-		if($result["errno"]==200){
+		if($result["errno"]==200 || $result["errno"]==201){
 
 			// el objeto usuario se pasa a una variable de sesión
 			$_SESSION['mbcorp']['user'] = $usuario;
