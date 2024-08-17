@@ -65,20 +65,8 @@
 				exit();
 			}
 
-			// obtiene la primer palabra de la query
-			$dml = strstr($sql, " ", true);
-
-			switch ($dml) {
-				case 'SELECT':
-				case 'DESCRIBE':
-				case 'CALL': // se agrego para que no tire error al loguearse
-						return $response->fetch_all(MYSQLI_ASSOC);
-					break;
-				
-				default:
-						return true;
-					break;
-			}
+			/*< retorna un objeto mysqli_response  */
+			return $response; 
 		}
 	}
 

@@ -7,6 +7,6 @@
 	$usuario->leaveOut();
 
 	// se redirecciona a landing
-	header("Location: ?slug=logout");
+	header("Location: logout");
 
  ?>

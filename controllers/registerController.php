@@ -18,11 +18,12 @@
 		// si el registro fue valido
 		if($result["errno"]==200 || $result["errno"]==201){
 
+			$usuario->login();
 			// el objeto usuario se pasa a una variable de sesión
 			$_SESSION['mbcorp']['user'] = $usuario;
 
 			// lo llevamos a su perfil para que lo complete
-			header("Location: ?slug=perfil");
+			header("Location: perfil");
 		}
 	}
 

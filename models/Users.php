@@ -55,7 +55,7 @@
 		 * */
 		function getByEmail(){
 
-			$result = $this->query("SELECT * FROM users WHERE email = '".$this->email."'");
+			$result = $this->query("CALL `getByEmail`('".$this->email."')")->fetch_all(MYSQLI_ASSOC);
 
 			if(count($result)==0){
 				return false;
@@ -75,12 +75,7 @@
 		 * */
 		function leaveOut(){
 			// todas las tablas siempre id, create_at, update_at, delete_at
-
-			$date_soft_delete = date("Y-m-d H:i:s");
-			$id = $this->id;
-
-			$ssql = "UPDATE users SET delete_at = '$date_soft_delete' WHERE id='$id'";
-
+			$ssql = "CALL leaveOut({$this->id})";
 	
 			$this->query($ssql);
 
@@ -104,7 +99,11 @@
 				$email = $this->email;
 				$password = md5($this->password);
 
-				$result = $this->query("INSERT INTO users (email, password) VALUES ('$email', '$password')");
+				$ssql = "CALL register('$email', '$password')";
+
+				//var_dump($ssql);
+
+				$result = $this->query($ssql);
 
 				$vector_error["error"] = "Guardo el usuario correctamente";
 				$vector_error["errno"] = 200;
@@ -119,7 +118,8 @@
 				$id = $result[0]["id"];
 				$password = md5($this->password);
 
-				$ssql = "UPDATE users SET first_name='', last_name='', password='$password',  delete_at = '0000-00-00 00:00:00' WHERE id='$id'";
+				$ssql = "CALL comeBack($id, '$password')";
+
 				$this->query($ssql);
 
 				$vector_error["error"] = "Usuario que vuelve arrastrandose";
@@ -153,7 +153,11 @@
 			$this->first_name = $nombre;
 			$this->last_name = $apellido;
 
-			$this->query("UPDATE users SET first_name = '$nombre', last_name = '$apellido' WHERE email = '$email'");
+			$ssql = "CALL updateUser('$email', '$nombre', '$apellido')";
+
+			var_dump($ssql);
+
+			$this->query($ssql);
 
 			$vector_error["error"] = "Se actualizo los datos con exito";
 			$vector_error["errno"] = 200;
@@ -184,7 +188,7 @@
 			// se agrego las comillas alrededor de email para que no tire error de mysql
 			$ssql = "CALL `getUserByEmail`('".$this->email."')";
 
-			$result = $this->query($ssql);
+			$result = $this->query($ssql)->fetch_all(MYSQLI_ASSOC);
 
 			// no se encontro el email
 			if(count($result)==0){
@@ -207,9 +211,7 @@
 			// se agrega al arreglo los mensajes de error
 			$result = array_merge($vector_error, $result);
 
-			// aqui deberiamos colocar la autocarga de los atributos de ese usuarios
-			//===================
-
+			// autocarga de valores (queda tambien la contraseña)
 			foreach ($this->attributes as $key => $attribute) {
 				$this->$attribute = $result[$attribute];
 			}
@@ -246,7 +248,7 @@
 		 * */
 		function getCant(){
 
-			return count($this->query("SELECT * FROM users"));
+			return count($this->query("SELECT * FROM users")->fetch_all(MYSQLI_ASSOC));
 		}
 
 	}

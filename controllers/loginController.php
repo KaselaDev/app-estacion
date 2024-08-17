@@ -24,7 +24,7 @@
 			$_SESSION['mbcorp']['user'] = $usuario;
 
 			// se redirecciona al panel de usuario
-			header("Location: ?slug=panel");
+			header("Location: panel");
 		}
 	}
 

@@ -13,14 +13,14 @@
 		$usuario->update($_POST);
 
 		// redirecciona al panel de usuario
-		header("Location: ?slug=panel");
+		header("Location: panel");
 	}
 
 	// carga la vista
 	$tpl = new MotorMaster("perfil");
 
 	// vector con variables para la vista
-	$vars = ["MSG_ERROR" => "","NAME_USER" => $usuario->first_name, "LAST_NAME" => $usuario->last_name];
+	$vars = ["MSG_ERROR" => "","NAME_USER" => $usuario->first_name, "LAST_NAME" => $usuario->last_name, "AVATAR_URL" => $usuario->avatar];
 
 	// reemplaza las variables de la vista con los valores del vector
 	$tpl->setVars($vars);

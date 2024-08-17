@@ -14,7 +14,7 @@
 	$seccion = "landing";
 
 	// si existe slug por GET
-	if(isset($_GET['slug'])){
+	if($_GET['slug']!=""){
 		// se reemplaza seccion por el valor de slug	
 		$seccion = $_GET['slug'];
 	}
