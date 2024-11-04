@@ -3,10 +3,7 @@
 	// Anula los errores de mysql
 	mysqli_report(MYSQLI_REPORT_OFF);
 
-	define("HOST", "localhost");
-	define("USER", "mbcorp");
-	define("PASS", "mbcorp1234");
-	define("DB", "mbcorp");
+
 
 	/**
 	 * 
@@ -36,7 +33,7 @@
 		 * */
 		function connect(){
 			// el arroba silencia los errores del objeto
-			$this->db = @new mysqli(HOST, USER, PASS, DB);	
+			$this->db = @new mysqli($_ENV["HOST"], $_ENV["USER"], $_ENV["PASS"], $_ENV["DB"], $_ENV["PORT"]);	
 
 			// control de errores de conexion a la db
 			if($this->db->connect_errno){

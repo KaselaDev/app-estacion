@@ -1,68 +1,18 @@
 <?php
+	
+	class User{
 
-	/**
-	* @file Users.php
-	* @brief Implementación de las funciones para el manejo la tabla Users.
-	* @author Matias Leonardo Baez
-	* @date 2024
-	* @contact elmattprofe@gmail.com
-	*/
-
-	include_once 'DBAbstract.php';
-
-	/**
-	 * 
-	 * Clase para trabajar con la tabla de usuarios
-	 * 
-	 * */
-	class User extends DBAbstract{
-
-		/**
-		 * 
-		 * Crea el objeto y crea de forma automática los atributos
-		 * basandose en las columnas de la tabla que representa
-		 * 
-		 * */
 		function __construct($email, $password){
-			parent::__construct();
-
-			$sql = "DESCRIBE users;";
-
-			$result = $this->query($sql);
-
-			foreach ($result as $key => $value) {
-
-				/**< Pasa el nombre del campo a una variable */
-				$variable = $value["Field"];
-				
-				/**< Pasa los nombres de los campos a un vector*/
-				$this->attributes[] = $variable;
-
-				/**< pasa como un nuevo atributo el nombre de un campo */
-				$this->$variable="";
-			}
-
-			$this->email = $email;
-			$this->password = $password;
 
 		}
 
-		/**
-		 * 
-		 * Busca el usuario por su email
-		 * @return array|bool arreglo con los datos del usuario|si no lo encontro false
-		 * 
-		 * */
 		function getByEmail(){
 
-			$result = $this->query("CALL `getByEmail`('".$this->email."')")->fetch_all(MYSQLI_ASSOC);
-
-			if(count($result)==0){
-				return false;
-			}
-
-			return $result;
+			
 		}
+
+
+
 
 		/**
 		 * 
@@ -250,6 +200,17 @@
 
 			return count($this->query("SELECT * FROM users")->fetch_all(MYSQLI_ASSOC));
 		}
+
+
+		function getAll(){
+				$result = $this->query("SELECT * FROM users")->fetch_all(MYSQLI_ASSOC);
+
+			if(count($result)==0){
+				return false;
+			}
+
+			return $result;
+		}	
 
 	}
 

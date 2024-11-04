@@ -1,13 +1,10 @@
 <?php 
 
-	// se pasa el objeto usuario de la sesión a una variable
-	$usuario = $_SESSION["mbcorp"]["user"];
-
 	// carga la vista
 	$tpl = new MotorMaster("panel");
 
-	// vector con variables para la vista
-	$vars = ["NAME_USER" => $usuario->first_name];
+	// // vector con variables para la vista
+	$vars = ["PROYECT_SECTION" => "Panel"];
 
 	// reemplaza las variables de la vista con los valores del vector
 	$tpl->setVars($vars);

@@ -1,10 +1,9 @@
-<?php 
-
+<?php
 	// carga la vista
-	$tpl = new MotorMaster("landing");
+	$tpl = new MotorMaster("detalle");
 
 	// variables a reemplazar en la vista
-	$vars = ["PROYECT_SECTION" => "Inicio"];
+	$vars = ["PROYECT_SECTION" => "Detalle"];
 	
 	// reemplaza las variables de la vista con los valores del vector 
 	$tpl->setVars($vars);

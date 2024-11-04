@@ -1,76 +1,16 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>MBCorp - Inicio</title>
+@extern('head')
+@extern('header')
 
-	<link rel="stylesheet" href="views/static/css/styles.css">
-</head>
-<body>
-
-
-	<div id="wrapper">
-		
-		<header>
-
-			<div id="hero">
-				<img src="views/static/img/system/hero.png" alt="">
-			</div>
-			
-
-			<div id="control">
-				<a href="login" class="btn__login">Ingresar</a>
-				<a href="register" class="btn__register">Registrame</a>
-			</div>
-		</header>
-
-		<content>
-
-			<div id="window">
-				
-				<div id="window__content">
-					
-					<div id="window__img">
-						<img src="views/static/img/system/landing.svg" alt="">
-					</div>
-
-
-					<div id="window__description">
-
-							<h1>Bienvenido a MBCORP X</h1>
-						<h3>Ya somos {{CANT_USERS}} de usuarios, vos tenes que ser uno/a más</h3>
-
-						<h3>Tenemos {{CANT_PRODUCTS}} disponibles</h3>
-					</div>
-
-				</div>
-
-			</div>
-			
-		</content>
-
-		<footer>
-
-			<div id="author">
-				@mattprofe
-			</div>
-
-			<div id="map">
-				<ol>
-				  <li>Landing</li>
-				  <li>Login</li>
-				  <li>Register</li>
-				</ol>
-			</div>
-			
-		</footer>
-
-
-
+<div class="card">
+	<div class="header">
+		<h2>Bienvenido a App Estacíon</h2>
 	</div>
+	<div class="contenido">
+		<p>En este sitio web encontrarás información en tiempo real sobre estaciones metereológicas a lo largo del país</p>
+		<a class="start" href="panel">
+			<p>Comenzar</p>
+		</a>
+	</div>
+</div>
 
-	
-	
-</body>
-</html>
+@extern('footer')
